@@ -1,3 +1,4 @@
 patrasbus/
 *.txt
 !token.txt
+config.json
