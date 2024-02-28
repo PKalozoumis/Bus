@@ -58,14 +58,17 @@ def write_token(token: str) -> None:
 
 if __name__ == "__main__":
 
-    #Read bus stop fron config.json
-    try:
-        with open("config.json", "r") as f:
-            selected_stop = json.load(f)["stop"]
-    except FileNotFoundError:
-        subprocess.run("clear", shell=True)
-        print("Missing config.json file\n")
-        sys.exit()
+    selected_stop = sys.argv[1] if len(sys.argv) > 1 else None
+
+    if selected_stop is None:
+        #Read bus stop fron config.json
+        try:
+            with open("config.json", "r") as f:
+                selected_stop = json.load(f)["stop"]
+        except FileNotFoundError:
+            subprocess.run("clear", shell=True)
+            print("Missing config.json file\n")
+            sys.exit()
 
     token = read_token()
 
