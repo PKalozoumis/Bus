@@ -59,8 +59,13 @@ def write_token(token: str) -> None:
 if __name__ == "__main__":
 
     #Read bus stop fron config.json
-    with open("config.json", "r") as f:
-        selected_stop = json.load(f)["stop"]
+    try:
+        with open("config.json", "r") as f:
+            selected_stop = json.load(f)["stop"]
+    except FileNotFoundError:
+        subprocess.run("clear", shell=True)
+        print("Missing config.json file\n")
+        sys.exit()
 
     token = read_token()
 
@@ -79,7 +84,8 @@ if __name__ == "__main__":
         try:
             resp = requests.get(req_url, headers = headers)
         except requests.ConnectionError:
-            print("Could not reach server")
+            subprocess.run("clear", shell=True)
+            print("Could not reach server\n")
             sys.exit()
 
         #print(resp.headers)
@@ -97,7 +103,8 @@ if __name__ == "__main__":
                 else:
                     break
             else:
-                print("No buses at the moment")
+                subprocess.run("clear", shell=True)
+                print("No buses at the moment\n")
                 sys.exit()
             
         else:
